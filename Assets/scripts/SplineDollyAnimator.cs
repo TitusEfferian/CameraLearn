@@ -1,63 +1,49 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
+[RequireComponent(typeof(CinemachineSplineDolly))]
 public class SplineDollyAnimator : MonoBehaviour
 {
-
-    public float duration = 5f;
+    [Min(0.01f)] public float duration = 5f;
     public bool loop = false;
     public bool pingPong = false;
-    public float startPosition = 0f;
+    [Range(0f, 1f)] public float startPosition = 0f;
 
     CinemachineSplineDolly dolly;
-    float t;
+    float progress;
     int direction = 1;
 
     void Awake()
     {
         dolly = GetComponent<CinemachineSplineDolly>();
-
     }
 
     void OnEnable()
     {
-        t = Mathf.Clamp01(startPosition);
+        progress = Mathf.Clamp01(startPosition);
         direction = 1;
-        dolly.CameraPosition = t;
-    }
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+        dolly.CameraPosition = progress;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        t+=direction * (Time.deltaTime/duration);
-        if(pingPong)
+        progress += direction * (Time.deltaTime / duration);
+
+        if (pingPong)
         {
-            if(t>=1f)
-            {
-                t=1f;
-                direction = 1;
-            }
-            else if(loop)
-            {
-                if(t>1f)
-                {
-                    t -=1;
-                }
-                if(t<0f)
-                {
-                    t+=1f;
-                }
-            } else
-            {
-                t = Mathf.Clamp01(t);
-            }
+            if (progress >= 1f) { progress = 1f; direction = -1; }
+            else if (progress <= 0f) { progress = 0f; direction = 1; }
         }
-        dolly.CameraPosition = t;
+        else if (loop)
+        {
+            if (progress > 1f) progress -= 1f;
+            if (progress < 0f) progress += 1f;
+        }
+        else
+        {
+            progress = Mathf.Clamp01(progress);
+        }
+
+        dolly.CameraPosition = progress;
     }
 }
