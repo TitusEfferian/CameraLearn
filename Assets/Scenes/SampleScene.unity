@@ -1185,6 +1185,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1159831977}
   m_CullTransparentMesh: 1
+--- !u!1 &1215847377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1215847379}
+  - component: {fileID: 1215847378}
+  m_Layer: 0
+  m_Name: CameraButtonRouter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1215847378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215847377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 087eaddd2e6928649ab96bca8cc761dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraButtonRouter
+  timelineButton: {fileID: 1159831979}
+  splineButton: {fileID: 2100127926}
+  playableDirector: {fileID: 888927956}
+  splineDollyAnimator: {fileID: 290085829}
+--- !u!4 &1215847379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215847377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1488.2311, y: -0, z: 1039.9482}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1316863894
 GameObject:
   m_ObjectHideFlags: 0
@@ -1790,3 +1838,4 @@ SceneRoots:
   - {fileID: 888927957}
   - {fileID: 1513073855}
   - {fileID: 840161223}
+  - {fileID: 1215847379}
