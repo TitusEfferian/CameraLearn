@@ -8,6 +8,7 @@ public class SplineDollyAnimator : MonoBehaviour
     public bool loop = false;
     public bool pingPong = false;
     [Range(0f, 1f)] public float startPosition = 0f;
+    bool isPlaying = false;
 
     CinemachineSplineDolly dolly;
     float progress;
@@ -27,6 +28,7 @@ public class SplineDollyAnimator : MonoBehaviour
 
     void Update()
     {
+        if(!isPlaying) return;
         progress += direction * (Time.deltaTime / duration);
 
         if (pingPong)
@@ -46,4 +48,12 @@ public class SplineDollyAnimator : MonoBehaviour
 
         dolly.CameraPosition = progress;
     }
+
+    public void PlayFromStart()
+    {
+        progress = 0f;
+        isPlaying = true;
+    }
+
+
 }
