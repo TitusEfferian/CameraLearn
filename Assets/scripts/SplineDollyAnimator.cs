@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -8,11 +9,11 @@ public class SplineDollyAnimator : MonoBehaviour
     public bool loop = false;
     public bool pingPong = false;
     [Range(0f, 1f)] public float startPosition = 0f;
-    bool isPlaying = false;
 
     CinemachineSplineDolly dolly;
     float progress;
     int direction = 1;
+    Coroutine playing;
 
     void Awake()
     {
@@ -26,37 +27,45 @@ public class SplineDollyAnimator : MonoBehaviour
         dolly.CameraPosition = progress;
     }
 
-    void Update()
+    public void PlayFromStart()
     {
-        if(!isPlaying) return;
-        progress += direction * (Time.deltaTime / duration);
-
-        if (pingPong)
-        {
-            if (progress >= 1f) { progress = 1f; direction = -1; }
-            else if (progress <= 0f) { progress = 0f; direction = 1; }
-        }
-        else if (loop)
-        {
-            if (progress > 1f) progress -= 1f;
-            if (progress < 0f) progress += 1f;
-        }
-        else
-        {
-            if (progress >= 1f) { progress = 1f; isPlaying = false; }
-            else if (progress <= 0f) { progress = 0f; isPlaying = false; }
-        }
-
-        dolly.CameraPosition = progress;
+        if (playing != null) StopCoroutine(playing);
+        playing = StartCoroutine(PlayRoutine());
     }
 
-    public void PlayFromStart()
+    IEnumerator PlayRoutine()
     {
         progress = Mathf.Clamp01(startPosition);
         direction = 1;
         dolly.CameraPosition = progress;
-        isPlaying = true;
+
+        while (true)
+        {
+            yield return null;
+            progress += direction * (Time.deltaTime / duration);
+
+            if (pingPong)
+            {
+                if (progress >= 1f) { progress = 1f; direction = -1; }
+                else if (progress <= 0f) { progress = 0f; direction = 1; }
+            }
+            else if (loop)
+            {
+                if (progress > 1f) progress -= 1f;
+                if (progress < 0f) progress += 1f;
+            }
+            else
+            {
+                if (progress >= 1f)
+                {
+                    progress = 1f;
+                    dolly.CameraPosition = progress;
+                    playing = null;
+                    yield break;
+                }
+            }
+
+            dolly.CameraPosition = progress;
+        }
     }
-
-
 }
