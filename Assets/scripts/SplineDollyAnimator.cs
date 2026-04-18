@@ -43,7 +43,8 @@ public class SplineDollyAnimator : MonoBehaviour
         }
         else
         {
-            progress = Mathf.Clamp01(progress);
+            if (progress >= 1f) { progress = 1f; isPlaying = false; }
+            else if (progress <= 0f) { progress = 0f; isPlaying = false; }
         }
 
         dolly.CameraPosition = progress;
@@ -51,7 +52,9 @@ public class SplineDollyAnimator : MonoBehaviour
 
     public void PlayFromStart()
     {
-        progress = 0f;
+        progress = Mathf.Clamp01(startPosition);
+        direction = 1;
+        dolly.CameraPosition = progress;
         isPlaying = true;
     }
 

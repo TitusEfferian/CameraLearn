@@ -9,7 +9,7 @@ public class CameraButtonRouter : MonoBehaviour
     [SerializeField] PlayableDirector playableDirector;
     [SerializeField] SplineDollyAnimator splineDollyAnimator;
 
-    void OnTimeLineClicked()
+    void OnTimelineClicked()
     {
         playableDirector.time = 0;
         playableDirector.Play();
@@ -22,18 +22,13 @@ public class CameraButtonRouter : MonoBehaviour
     }
     void Awake()
     {
-        timelineButton.onClick.AddListener(OnTimeLineClicked);
+        timelineButton.onClick.AddListener(OnTimelineClicked);
         splineButton.onClick.AddListener(OnSplineClicked);
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    void OnDestroy()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (timelineButton != null) timelineButton.onClick.RemoveListener(OnTimelineClicked);
+        if (splineButton != null) splineButton.onClick.RemoveListener(OnSplineClicked);
     }
 }
